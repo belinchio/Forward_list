@@ -1,18 +1,43 @@
 #include "List.h"
 #include <iostream>
 
-int main(int argc, char const *argv[])
-{
-	
-	List<int> lst;
-	lst.push_front(13);
-	lst.push_front(15);
-	lst.push_front(17);
-	lst.print();
-	lst.pop_front();
-	lst.print();
-	lst.insert(lst.getNode(0), 100);
-	lst.print();
+template <typename Item>
+void PrintList(const Forward_list<Item> &list) {
+    std::cout << "[ ";
+    for (const auto &item : list) {
+        std::cout << item << ' ';
+    }
 
-	return 0;
+    std::cout << ']' << std::endl;
+}
+
+int main() {
+    Forward_list<int> l {1, 2, 3};
+    PrintList(l);
+    
+    {
+    auto it = l.find(2);
+    l.insert_after(it, 4);
+    PrintList(l);
+    }
+
+    {
+    auto it = l.find(1);
+    l.erase_after(it);
+    PrintList(l);
+    }
+
+
+    l.push_front(5);
+    l.push_back(6);
+    PrintList(l);
+
+    l.pop_front();
+    PrintList(l);
+
+    l.clear();
+    PrintList(l);
+
+    const Forward_list<int> cl {2, 4, 6};
+    PrintList(cl);
 }
